@@ -1,0 +1,30 @@
+name: Flat
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    # Every 30 minutes, may need to tweak this
+    - cron: '*/30 * * * *'
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+      # This step installs Deno, which is a new Javascript runtime that improves on Node. Can be used for an optional postprocessing step
+      - name: Setup deno
+        uses: denoland/setup-deno@main
+        with:
+          deno-version: v1.x
+      # Check out the repository so it can read the files inside of it and do other operations
+      - name: Check out repo
+        uses: actions/checkout@v2
+      # The Flat Action step. We fetch the data in the http_url and save it as downloaded_filename
+      - name: Fetch data
+        uses: githubocto/flat@v3
+        with:
+          http_url: https://opendata.arcgis.com/datasets/6d8110617c4b4971a270ff0834971b89_0.geojson # THE URL YOU WISH TO FETCH GOES HERE
+          downloaded_filename: data.json # The http_url gets saved and renamed in our repository. Example: data.json, data.csv, image.png
+          postprocess: deno/postprocess.js # A postprocessing javascript or typescript file written in Deno

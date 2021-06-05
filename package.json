@@ -1,15 +1,22 @@
 {
-  "name": "mpls-pig-watch",
+  "name": "mpd-data",
   "version": "0.1.0",
   "private": true,
+  "prettier": "@readme/eslint-config/prettier",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "mapbox-gl": "^2.2.0",
     "next": "10.2.3",
     "react": "17.0.2",
     "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@readme/eslint-config": "^5.0.5",
+    "eslint": "^7.27.0",
+    "prettier": "^2.3.0"
   }
 }

@@ -1,0 +1,7 @@
+{
+  "extends": ["@readme/eslint-config", "@readme/eslint-config/react"],
+  "ignorePatterns": "deno/",
+  "rules": {
+    "react/react-in-jsx-scope": "off" // using React 17+, not needed!
+  }
+}
