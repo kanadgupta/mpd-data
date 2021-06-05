@@ -4,8 +4,8 @@ import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
 
 import styles from '../styles/Mapbox.module.css';
 
-import { addDataLayer } from '../map/addDataLayer';
-import { initializeMap } from '../map/initializeMap';
+import { addDataLayer } from '../mapbox/addDataLayer';
+import { initializeMap } from '../mapbox/initializeMap';
 
 import geojson from '../postprocessed_data.json';
 
