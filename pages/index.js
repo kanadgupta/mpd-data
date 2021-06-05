@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import styles from '@styles/Home.module.css';
 
-import Mapbox from '../components/Mapbox';
+import Mapbox from '@components/Mapbox';
 
 export default function Home() {
   return (

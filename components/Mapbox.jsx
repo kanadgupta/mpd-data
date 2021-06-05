@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
 
-import styles from '../styles/Mapbox.module.css';
+import styles from '@styles/Mapbox.module.css';
 
-import { addDataLayer } from '../mapbox/addDataLayer';
-import { initializeMap } from '../mapbox/initializeMap';
+import { addDataLayer } from '@mapbox/addDataLayer';
+import { initializeMap } from '@mapbox/initializeMap';
 
 import geojson from '../postprocessed_data.json';
 
