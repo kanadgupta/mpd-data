@@ -15,9 +15,3 @@
   align-items: center;
   width: 100%;
 }
-
-.mapbox {
-  flex: 1;
-  display: flex;
-  width: 100%;
-}
