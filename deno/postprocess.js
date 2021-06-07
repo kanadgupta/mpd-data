@@ -7,6 +7,7 @@ const data = await readJSON(filename);
 
 const outDir = 'data/processed';
 
+// Filter geojson for data in current year
 const currentYear = new Date().getFullYear();
 const currentYearFeatures = data.features.filter(feat => {
   if (feat.properties.ResponseDate) {
@@ -23,3 +24,7 @@ const currentYearGeoJson = {
 };
 
 await writeJSON(`${outDir}/year.json`, currentYearGeoJson);
+
+// Of the current year data set, only return metadata
+const currentYearProperties = currentYearFeatures.map(feat => feat.properties);
+await writeJSON(`${outDir}/properties.json`, currentYearProperties);
