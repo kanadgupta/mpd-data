@@ -6,8 +6,8 @@ on:
       - main
   workflow_dispatch:
   schedule:
-    # Every 30 minutes, may need to tweak this
-    - cron: '*/30 * * * *'
+    # Every sixth hour
+    - cron: '0 */6 * * *'
 
 jobs:
   scheduled:
