@@ -7,7 +7,7 @@ import styles from '@styles/Mapbox.module.css';
 import { addDataLayer } from '@mapbox/addDataLayer';
 import { initializeMap } from '@mapbox/initializeMap';
 
-import geojson from '../postprocessed_data.json';
+import geojson from '../data/processed/year.json';
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY;
 
