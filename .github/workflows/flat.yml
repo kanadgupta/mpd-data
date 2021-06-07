@@ -26,5 +26,5 @@ jobs:
         uses: githubocto/flat@v3
         with:
           http_url: https://opendata.arcgis.com/datasets/6d8110617c4b4971a270ff0834971b89_0.geojson # THE URL YOU WISH TO FETCH GOES HERE
-          downloaded_filename: data.json # The http_url gets saved and renamed in our repository. Example: data.json, data.csv, image.png
+          downloaded_filename: data/input.json # The http_url gets saved and renamed in our repository. Example: data.json, data.csv, image.png
           postprocess: deno/postprocess.js # A postprocessing javascript or typescript file written in Deno
