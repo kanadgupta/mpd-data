@@ -1,5 +1,5 @@
 {
-  "extends": ["@readme/eslint-config", "@readme/eslint-config/react"],
+  "extends": ["@readme/eslint-config", "@readme/eslint-config/react", "plugin:@next/next/recommended"],
   "ignorePatterns": "deno/",
   "rules": {
     "import/no-unresolved": [
