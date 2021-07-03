@@ -52,7 +52,7 @@ const groupedByDateCount = Object.keys(groupedByDate)
     const value = groupedByDate[date].length;
     groupedByDateCountLabels.push(date);
     groupedByDateCountValues.push(value);
-    return { [date]: groupedByDate[date].length };
+    return { date, count: groupedByDate[date].length };
   });
 
 const groupedByDateCountOutput = { labels: groupedByDateCountLabels, values: groupedByDateCountValues };
