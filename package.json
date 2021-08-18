@@ -4,6 +4,7 @@
   "private": true,
   "prettier": "@readme/eslint-config/prettier",
   "scripts": {
+    "deno": "deno run -q -A --unstable deno/postprocess.js data/input.json",
     "dev": "next dev",
     "lint": "next lint",
     "build": "next build",
