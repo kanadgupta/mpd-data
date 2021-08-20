@@ -30,9 +30,22 @@ await writeJSON(`${outDir}/year.json`, currentYearGeoJson);
 const currentYearProperties = currentYearFeatures.map(feat => feat.properties);
 await writeJSON(`${outDir}/properties.json`, currentYearProperties);
 
+// Filter geojson for data in Jacob's term
+const firstDayOfJacobsTerm = new Date('2018-01-02');
+const jacobFreyFeatures = data.features.filter(feat => {
+  if (feat.properties.ResponseDate) {
+    const respDate = new Date(feat.properties.ResponseDate);
+    return firstDayOfJacobsTerm < respDate;
+  }
+  return false;
+});
+
+// Of the current year data set, only return metadata
+const jacobFreyProperties = jacobFreyFeatures.map(feat => feat.properties);
+
 // this returns an object with dates as keys
 // the values are an array of objects where each object is the raw property
-const groupedByDate = currentYearProperties.reduce((groups, event) => {
+const groupedByDate = jacobFreyProperties.reduce((groups, event) => {
   const date = event.ResponseDate.split('T')[0];
   if (!groups[date]) {
     groups[date] = [];
@@ -41,22 +54,16 @@ const groupedByDate = currentYearProperties.reduce((groups, event) => {
   return groups;
 }, {});
 
-
-// Logic for preparing data for chart by date
-const groupedByDateCountLabels = [];
-const groupedByDateCountValues = [];
-
-const groupedByDateCount = Object.keys(groupedByDate)
+const calendarData = Object.keys(groupedByDate)
   .sort()
-  .map(date => {
-    const value = groupedByDate[date].length;
-    groupedByDateCountLabels.push(date);
-    groupedByDateCountValues.push(value);
-    return { date, count: groupedByDate[date].length };
+  .map(day => {
+    let value = groupedByDate[day].length;
+    // There are reporting errors on these days which skew the visualization,
+    // so we're normalizing the data a bit here.
+    if (['2019-01-01', '2020-01-01', '2021-01-01'].includes(day)) {
+      value = 10;
+    }
+    return { day, value, events: groupedByDate[day] };
   });
 
-const groupedByDateCountOutput = { labels: groupedByDateCountLabels, values: groupedByDateCountValues };
-
-await writeJSON(`${outDir}/groupedByDate/raw.json`, groupedByDate);
-await writeJSON(`${outDir}/groupedByDate/count.json`, groupedByDateCount);
-await writeJSON(`${outDir}/groupedByDate/chart.json`, groupedByDateCountOutput);
+await writeJSON(`${outDir}/groupedByDate/calendar.json`, calendarData);
