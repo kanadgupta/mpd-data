@@ -8,6 +8,8 @@ const data = await readJSON(filename);
 const outDir = 'data/processed';
 
 // TODO: determine which data points should be filtered out
+// Clean out any dirty data (e.g. does not contain actual geographic points)
+
 // Filter geojson for data in current year
 const currentYear = new Date().getFullYear();
 const currentYearFeatures = data.features.filter(feat => {
@@ -68,4 +70,54 @@ const calendarData = groupedByDateSortedKeys.map(day => {
   return { day, value, events: groupedByDate[day] };
 });
 
+// this returns an object with months as keys
+// the values are an array of objects where each object is the raw property
+const groupedByMonth = jacobFreyProperties.reduce((groups, event) => {
+  const month = event.ResponseDate.split(/-\d\dT/)[0];
+  if (!groups[month]) {
+    groups[month] = [];
+  }
+  groups[month].push(event);
+  return groups;
+}, {});
+
+const groupedByMonthSortedKeys = Object.keys(groupedByMonth).sort();
+
+function getLineGraphRacePercentageData(raceArray) {
+  return groupedByMonthSortedKeys
+    .map(month => {
+      // Get event objects and filter out the bad ones
+      const events = groupedByMonth[month].filter(event => {
+        const date = event.ResponseDate.split('T')[0];
+        return !naughtyDates.includes(date);
+      });
+      // Various ways that we are defining "unknown" here
+      const unknownRaceEvents = events.filter(event => raceArray.includes(event.Race));
+      if (events.length < 10) return false;
+
+      return { x: month, y: unknownRaceEvents.length / events.length };
+    })
+    .filter(x => x);
+}
+
+const lineData = [
+  {
+    id: 'Unknown / Not Recorded',
+    data: getLineGraphRacePercentageData(['not recorded', 'Unknown', null]),
+  },
+  {
+    id: 'Black',
+    data: getLineGraphRacePercentageData(['Black']),
+  },
+  {
+    id: 'White',
+    data: getLineGraphRacePercentageData(['White']),
+  },
+  {
+    id: 'Native American',
+    data: getLineGraphRacePercentageData(['Native American']),
+  },
+];
+
 await writeJSON(`${outDir}/groupedByDate/calendar.json`, calendarData);
+await writeJSON(`${outDir}/groupedByMonth/line.json`, lineData);
