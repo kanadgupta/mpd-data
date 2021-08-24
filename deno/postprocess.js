@@ -61,13 +61,14 @@ const groupedByDateSortedKeys = Object.keys(groupedByDate).sort();
 const naughtyDates = ['2019-01-01', '2020-01-01', '2021-01-01'];
 
 const calendarData = groupedByDateSortedKeys.map(day => {
-  let value = groupedByDate[day].length;
+  const events = groupedByDate[day];
+  let value = events.length;
   // There are reporting errors on these days which skew the visualization,
   // so we're normalizing the data a bit here.
   if (naughtyDates.includes(day)) {
     value = 10;
   }
-  return { day, value, events: groupedByDate[day] };
+  return { day, value, originalValue: events.length };
 });
 
 // this returns an object with months as keys
