@@ -24,3 +24,43 @@ a {
   padding: 5px 9px;
   max-width: 15em;
 }
+
+.cal-block, .pie-block {
+  /* TODO: figure out what this height should be! */
+  height: min(100vw, 750px);
+  width: min(90%, 1000px);
+  padding-bottom: 20px;
+}
+
+h2.title-heading {
+  font-family: 'Bebas Neue', cursive!important;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.33;
+  padding: 1em;
+  text-align: center;
+}
+
+p {
+  padding-bottom: 20px;
+}
+
+.pie-section {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .pie-section {
+    flex-direction: column;
+  }
+
+  .cal-block {
+    /* TODO: figure out what this height should be! */
+    height: 1000px;
+    width: 60vw;
+  }
+}

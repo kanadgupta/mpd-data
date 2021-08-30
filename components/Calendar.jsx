@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import { ResponsiveCalendar } from '@nivo/calendar';
+import PropTypes from 'prop-types';
 
 import calData from '../data/processed/groupedByDate/calendar.json';
 
@@ -47,32 +47,58 @@ const Tooltip = ({ data }) => (
   </div>
 );
 
-const Calendar = () => (
-  <ResponsiveCalendar
-    colors={oranges}
-    data={calData}
-    dayBorderColor="#ffffff"
-    dayBorderWidth={2}
-    emptyColor="#eeeeee"
-    from="2018-01-02"
-    legends={[
-      {
-        anchor: 'bottom-right',
-        direction: 'row',
-        translateY: 36,
-        itemCount: 4,
-        itemWidth: 42,
-        itemHeight: 36,
-        itemsSpacing: 14,
-        itemDirection: 'right-to-left',
-      },
-    ]}
-    margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
-    monthBorderColor="#ffffff"
-    to="2021-08-18"
-    tooltip={data => <Tooltip data={data} />}
-    yearSpacing={40}
-  />
-);
+const defaultProps = {
+  colors: oranges,
+  dayBorderColor: '#ffffff',
+  dayBorderWidth: 2,
+  emptyColor: '#eeeeee',
+  monthBorderColor: '#ffffff',
+  // eslint-disable-next-line react/display-name
+  tooltip: data => <Tooltip data={data} />,
+};
+
+const CalendarItem = ({ data, ...props }) => {
+  let from = data[0].day;
+  const [fromYear, fromMonth, fromDay] = from.split('-');
+  if (fromMonth === '01' && fromDay === '01') from = `${fromYear}-01-02`;
+  const to = data[data.length - 1].day;
+  return <ResponsiveCalendar data={data} from={from} to={to} {...defaultProps} {...props} />;
+};
+
+const Calendar = ({ isMobile = false }) =>
+  isMobile ? (
+    <>
+      {calData.map((yearData, i) => (
+        <div key={i} className="cal-block">
+          <CalendarItem data={yearData} direction="vertical" margin={{ top: 40, right: 40, bottom: 40, left: 40 }} />
+        </div>
+      ))}
+    </>
+  ) : (
+    <div className="cal-block">
+      <CalendarItem data={calData.flat()} margin={{ top: 0, right: 20, bottom: 0, left: 20 }} yearSpacing={50} />
+    </div>
+  );
+
+Calendar.propTypes = {
+  isMobile: PropTypes.bool,
+};
+
+CalendarItem.propTypes = {
+  data: PropTypes.array,
+};
+
+Tooltip.propTypes = {
+  data: PropTypes.shape({
+    color: PropTypes.string,
+    data: PropTypes.object,
+    date: PropTypes.Date,
+    day: PropTypes.string,
+    size: PropTypes.number,
+    value: PropTypes.string,
+    x: PropTypes.number,
+    y: PropTypes.number,
+  }),
+};
 
 export default Calendar;

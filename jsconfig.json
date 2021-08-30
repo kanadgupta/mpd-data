@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
       "@mapbox/*": ["mapbox/*"],
       "@styles/*": ["styles/*"]
     }
