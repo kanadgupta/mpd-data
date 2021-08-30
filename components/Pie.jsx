@@ -1,6 +1,6 @@
 import { ResponsivePie } from '@nivo/pie';
 
-import pieData from '../data/processed/groupedByDate/pie.json';
+import pieData from '../data/processed/pie.json';
 
 const Pie = () => (
   <ResponsivePie

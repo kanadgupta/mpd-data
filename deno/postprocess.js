@@ -100,5 +100,5 @@ const pieData = Object.keys(raceCounts)
   })
   .sort((a, b) => a.value - b.value);
 
-await writeJSON(`${outDir}/groupedByDate/calendar.json`, splitCalendarDataByYear());
-await writeJSON(`${outDir}/groupedByDate/pie.json`, pieData);
+await writeJSON(`${outDir}/calendar.json`, splitCalendarDataByYear());
+await writeJSON(`${outDir}/pie.json`, pieData);

@@ -9,8 +9,8 @@ import Pie from '@components/Pie';
 // eslint-disable-next-line import/no-unresolved
 import useWindowSize from '@hooks/useWindowSize';
 
-import calData from '../data/processed/groupedByDate/calendar.json';
-import pieData from '../data/processed/groupedByDate/pie.json';
+import calData from '../data/processed/calendar.json';
+import pieData from '../data/processed/pie.json';
 
 const Main = () => {
   const { width } = useWindowSize();

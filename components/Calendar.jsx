@@ -1,7 +1,7 @@
 import { ResponsiveCalendar } from '@nivo/calendar';
 import PropTypes from 'prop-types';
 
-import calData from '../data/processed/groupedByDate/calendar.json';
+import calData from '../data/processed/calendar.json';
 
 const oranges = ['#fdae6b', '#fd8d3c', '#f16913', '#d94801', '#a63603', '#7f2704'];
 
