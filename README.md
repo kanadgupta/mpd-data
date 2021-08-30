@@ -16,6 +16,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-Flat Data Views: https://flatgithub.com/kanadgupta/mpd-data?filename=data%2Fprocessed%2Fproperties.json
-
 Data Source: https://opendata.minneapolismn.gov/datasets/police-use-of-force

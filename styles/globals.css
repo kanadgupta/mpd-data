@@ -15,11 +15,6 @@ a {
   box-sizing: border-box;
 }
 
-.mapboxgl-popup-content {
-  max-height: 100px;
-  overflow: auto;
-}
-
 .calendar-tooltip {
   background: white;
   color: inherit;

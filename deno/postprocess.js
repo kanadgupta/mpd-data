@@ -7,31 +7,6 @@ const data = await readJSON(filename);
 
 const outDir = 'data/processed';
 
-// TODO: determine which data points should be filtered out
-// Clean out any dirty data (e.g. does not contain actual geographic points)
-
-// Filter geojson for data in current year
-const currentYear = new Date().getFullYear();
-const currentYearFeatures = data.features.filter(feat => {
-  if (feat.properties.ResponseDate) {
-    const year = new Date(feat.properties.ResponseDate).getFullYear();
-    return year === currentYear;
-  }
-  return false;
-});
-
-const currentYearGeoJson = {
-  features: currentYearFeatures,
-  name: 'Police_Use_of_Force',
-  type: 'FeatureCollection',
-};
-
-await writeJSON(`${outDir}/year.json`, currentYearGeoJson);
-
-// Of the current year data set, only return metadata
-const currentYearProperties = currentYearFeatures.map(feat => feat.properties);
-await writeJSON(`${outDir}/properties.json`, currentYearProperties);
-
 // Filter geojson for data in Jacob's term
 const firstDayOfJacobsTerm = new Date('2018-01-02');
 const jacobFreyFeatures = data.features.filter(feat => {
