@@ -8,7 +8,7 @@ const Bar = () => (
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0, // TODO: tweak this to make it mobile friendly
-      legend: '# of force events',
+      legend: 'race',
       legendPosition: 'middle',
       legendOffset: 40, // TODO: tweak this to make it mobile friendly
     }}
@@ -16,7 +16,7 @@ const Bar = () => (
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: 'race',
+      legend: '# of force events',
       legendPosition: 'middle',
       legendOffset: -60,
     }}
