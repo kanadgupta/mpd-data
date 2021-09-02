@@ -4,6 +4,7 @@ import styles from '@styles/Home.module.css';
 import AnimatedNumber from '@components/AnimatedNumber';
 import Calendar from '@components/Calendar';
 import Pie from '@components/Pie';
+import Bar from '@components/Bar';
 
 // Not sure why this is failing, I have it in jsconfig.json?
 // eslint-disable-next-line import/no-unresolved
@@ -46,6 +47,11 @@ const Main = () => {
           </p>
           <div className="pie-block">
             <Pie />
+          </div>
+        </div>
+        <div className="bar-section">
+          <div className="bar-block">
+            <Bar />
           </div>
         </div>
       </div>

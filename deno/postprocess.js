@@ -96,11 +96,47 @@ function splitCalendarDataByYear() {
   return calendarDataSplitByYear;
 }
 
-const raceCounts = getPropertyCounts(jacobFreyProperties, 'Race', {
+const raceMappings = {
   null: 'Not Recorded',
   'not recorded': 'Not Recorded',
   'Pacific Islander': 'Other / Mixed Race',
   Asian: 'Other / Mixed Race',
+};
+
+const forceTypeMappings = {
+  null: 'Unknown',
+  'Less Lethal Projectile': 'Less Lethal',
+};
+
+const raceCounts = getPropertyCounts(jacobFreyProperties, 'Race', raceMappings);
+
+// This is for the keys of the bar chart
+const forceTypeCounts = getPropertyCounts(jacobFreyProperties, 'ForceType', forceTypeMappings);
+const barKeys = Object.keys(forceTypeCounts).sort((a, b) => forceTypeCounts[b] - forceTypeCounts[a]);
+
+const barObject = {};
+
+jacobFreyProperties.forEach(property => {
+  const { ForceType, Race } = property;
+  // Remap race values accordingly
+  let remappedRace = Race;
+  if (raceMappings[Race]) remappedRace = raceMappings[Race];
+  // Remap force type values accordingly
+  let remappedForceType = ForceType;
+  if (forceTypeMappings[ForceType]) remappedForceType = forceTypeMappings[ForceType];
+  // create object for a race if it doesn't exist
+  if (!Object.keys(barObject).includes(remappedRace)) {
+    barObject[remappedRace] = {};
+  }
+  // increment force type counts for race object
+  if (!barObject[remappedRace][remappedForceType]) barObject[remappedRace][remappedForceType] = 1;
+  else barObject[remappedRace][remappedForceType] = barObject[remappedRace][remappedForceType] + 1;
+});
+
+// Convert object into nivo-friendly array of objects
+const barData = Object.keys(barObject).map(id => {
+  const objectToReturn = barObject[id];
+  return { ...objectToReturn, id };
 });
 
 const pieData = Object.keys(raceCounts)
@@ -112,3 +148,4 @@ const pieData = Object.keys(raceCounts)
 
 await writeJSON(`${outDir}/calendar.json`, splitCalendarDataByYear());
 await writeJSON(`${outDir}/pie.json`, pieData);
+await writeJSON(`${outDir}/bar.json`, { data: barData, keys: barKeys });
