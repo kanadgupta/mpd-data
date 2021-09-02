@@ -39,13 +39,18 @@ const naughtyDates = ['2019-01-01', '2020-01-01', '2021-01-01'];
  * Returns the counts of each value of the given property (used in pie charts)
  * @param {Array} array An array of objects, where the objects contain the `property`
  * @param {string} property The key of the object to return the unique values of
+ * (e.g. "Race", "ForceType")
+ * @param {Object} valueMappings An object with value mappings for renaming properties
+ * (e.g. setting `null` Race values to `not recorded`)
  * @returns {Object} an object where the keys are the values of the `property`, and the values are the counts of the values in the array
  */
-function getPropertyCounts(array, property) {
+function getPropertyCounts(array, property, valueMappings = {}) {
   const output = {};
   array.forEach(event => {
-    if (!output[event[property]]) output[event[property]] = 1;
-    else output[event[property]] = output[event[property]] + 1;
+    let value = event[property];
+    if (valueMappings[value]) value = valueMappings[value];
+    if (!output[value]) output[value] = 1;
+    else output[value] = output[value] + 1;
   });
   return output;
 }
@@ -91,7 +96,12 @@ function splitCalendarDataByYear() {
   return calendarDataSplitByYear;
 }
 
-const raceCounts = getPropertyCounts(jacobFreyProperties, 'Race');
+const raceCounts = getPropertyCounts(jacobFreyProperties, 'Race', {
+  null: 'Not Recorded',
+  'not recorded': 'Not Recorded',
+  'Pacific Islander': 'Other / Mixed Race',
+  Asian: 'Other / Mixed Race',
+});
 
 const pieData = Object.keys(raceCounts)
   .map(race => {
