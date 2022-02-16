@@ -1,6 +1,6 @@
 // The Flat Data postprocessing libraries can be found at https://deno.land/x/flat/mod.ts
 // Replace 'x' with latest library version
-import { readJSON, writeJSON } from 'https://deno.land/x/flat@0.0.10/mod.ts';
+import { readJSON, writeJSON } from 'https://deno.land/x/flat@0.0.14/mod.ts';
 
 const filename = Deno.args[0]; // equivalent to writing `const filename = 'btc-price.json'`
 const data = await readJSON(filename);
